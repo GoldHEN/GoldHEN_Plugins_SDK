@@ -2,7 +2,7 @@
 
 This is the GoldHEN Plugin SDK repository.
 
-It requires OpenOrbis PS4 Toolchain and LLVM to be installed.
+It requires [OpenOrbis PS4 Toolchain](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) and [LLVM](https://llvm.org/) to be installed.
 
 ## Including the SDK as source
 
@@ -18,14 +18,9 @@ run `build_static.bat` to build a static library `libGoldHEN_Hook.a` and then us
 
 ## Credits
 
-- OSM <https://github.com/OSM-Made>
-
-- jocover <https://github.com/jocover>
-
-- bucanero <https://github.com/bucanero>
-
-- OpenOrbis Team <https://github.com/OpenOrbis>
-
-- SiSTRo <https://github.com/SiSTR0>
-
-
+- [OSM](https://github.com/OSM-Made)
+- [jocover](https://github.com/jocover)
+- [bucanero](https://github.com/bucanero)
+- [OpenOrbis Team](https://github.com/OpenOrbis)
+- [SiSTRo](https://github.com/SiSTR0)
+- [nik](https://github.com/nkrapivin)
