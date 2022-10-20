@@ -38,7 +38,7 @@ typedef struct _GHSDK_Detour {
 // usage:
 // typedef int(*somefunc_t)(int, void *, const char *);
 // int result = Detour_Stub(&SomeHook, somefunc_t, /* arguments begin */ 1, NULL, "hi");
-#define Detour_Stub(This, FunctionPointerType, ...) ((_FunctionTypedef)((This)->StubPtr))(/* Arguments */__VA_ARGS__)
+#define Detour_Stub(This, FunctionPointerType, ...) ((FunctionPointerType)((This)->StubPtr))(/* Arguments */__VA_ARGS__)
 
 void *Detour_DetourFunction(Detour *This, uint64_t FunctionPtr, void *HookPtr);
 
