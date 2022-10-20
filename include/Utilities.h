@@ -41,7 +41,7 @@ typedef unsigned long HA;
 
 // this defines the actual implementation
 #define HOOK_INIT(name)                                                        \
-        Detour Detour_##name = { 0 }
+        Detour Detour_##name = { DetourMode_x64 }
 
 // this does a 64bit hook
 #define HOOK(name)                                                             \
