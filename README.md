@@ -18,7 +18,7 @@ run `make` for Linux or `build_static.bat` for Windows to build a static library
 
 ## Credits
 
-- [OSM](https://github.com/OSM-Made)
+- [CTN](https://github.com/ctn123)
 - [jocover](https://github.com/jocover)
 - [bucanero](https://github.com/bucanero)
 - [OpenOrbis Team](https://github.com/OpenOrbis)
