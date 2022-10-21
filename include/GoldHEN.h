@@ -2,11 +2,12 @@
  * GoldHEN Plugin SDK - a prx hook/patch sdk for Orbis OS
  *
  * Credits
- * - OSM <https://github.com/OSM-Made>
+ * - ctn123 <https://github.com/ctn123>
  * - jocover <https://github.com/jocover>
  * - bucanero <https://github.com/bucanero>
  * - OpenOrbis Team <https://github.com/OpenOrbis>
  * - SiSTRo <https://github.com/SiSTR0>
+ * - nik <https://github.com/nkrapivin>
  */
 
 #pragma once
