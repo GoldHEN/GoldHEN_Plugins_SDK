@@ -48,11 +48,11 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 $(TARGET): $(INTDIR) $(OBJS)
-	$(LD) $(INTDIR)/*.o $(OO_PS4_TOOLCHAIN)/lib/crtlib.o -o $(INTDIR)/$(PROJDIR).elf $(LDFLAGS)
+	$(LD) $(INTDIR)/*.o build/crtprx.o -o $(INTDIR)/$(PROJDIR).elf $(LDFLAGS)
 	$(TOOLCHAIN)/bin/$(CDIR)/create-fself -in=$(INTDIR)/$(PROJDIR).elf -out=$(INTDIR)/$(PROJDIR).oelf --lib=$(TARGET) --paid 0x3800000000000011
 
 $(TARGETSTATIC): $(INTDIR) $(OBJS)
-	$(AR) --format=bsd rcs $(TARGETSTATIC) $(INTDIR)/*.o
+	$(AR) --format=bsd rcs $(TARGETSTATIC) $(INTDIR)/*.o build/crtprx.o
 
 $(TARGETSTUB): $(INTDIR) $(STUBOBJS)
 	$(CC) $(INTDIR)/*.o.stub -o $(TARGETSTUB) -target x86_64-pc-linux-gnu -shared -fuse-ld=lld -ffreestanding -nostdlib -fno-builtin -L$(TOOLCHAIN)/lib $(LIBS)
@@ -69,10 +69,13 @@ $(INTDIR)/%.o.stub: $(PROJDIR)/%.c
 $(INTDIR)/%.o.stub: $(PROJDIR)/%.cpp
 	$(CCX) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -s -c -o $@ $<
 
-.PHONY: clean
+.PHONY: clean crt
 .DEFAULT_GOAL := all
 
-all: $(TARGETSTATIC)
+all: crt $(TARGETSTATIC)
 
 clean:
-	rm -rf $(TARGET) $(TARGETSTUB) $(INTDIR) $(OBJS)
+	rm -rf $(TARGET) $(TARGETSTUB) $(INTDIR) $(OBJS) build/crtprx.o
+
+crt:
+	clang -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c crt/crtprx.c -o build/crtprx.o
