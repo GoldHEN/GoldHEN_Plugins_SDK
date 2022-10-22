@@ -11,17 +11,6 @@
 
 #include "Common.h"
 
-void klog(const char* fmt, ...) {
-    va_list args;
-	char Buffer[0x100] = { '\0' };
-	
-	va_start(args, fmt);
-	vsnprintf(Buffer, sizeof(Buffer), fmt, args);
-	va_end(args);
-
-	sys_sdk_cmd(GOLDHEN_SDK_CMD_KLOG, Buffer);
-}
-
 void hex_dump(void *data, size_t size) {
     unsigned char *p = (unsigned char *)data;
     int i;

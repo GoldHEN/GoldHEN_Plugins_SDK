@@ -83,7 +83,7 @@ void *Detour_DetourFunction64(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     uint32_t InstructionSize = Detour_GetInstructionSize(This, FunctionPtr, sizeof(This->JumpInstructions64));
 
 #ifdef DEBUG
-    klog("[Detour] %s - InstructionSize: %u\n", __FUNCTION__, InstructionSize);
+    klog("[Detour] %s: - InstructionSize: %u\n", __FUNCTION__, InstructionSize);
 #endif
 
     if (InstructionSize < sizeof(This->JumpInstructions64)) {
@@ -130,7 +130,7 @@ void *Detour_DetourFunction64(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     Detour_WriteJump64(This, (void *) FunctionPtr, (uint64_t) This->TrampolinePtr);
 
 #ifdef DEBUG
-    klog("[Detour] %s: Detour Written Successfully! (FunctionPtr: %p - HookPtr: %p - HookPtrTrampoline: %p - StubPtr: %p - StubSize: %zu\n", __FUNCTION__, This->FunctionPtr, This->HookPtr, This->TrampolinePtr, This->StubPtr, This->StubSize);
+    klog("[Detour] %s: Detour Written Successfully! (FunctionPtr: %p - HookPtr: %p - HookPtrTrampoline: %p - StubPtr: %p - StubSize: %zu)\n", __FUNCTION__, This->FunctionPtr, This->HookPtr, This->TrampolinePtr, This->StubPtr, This->StubSize);
 #endif
 
     return This->StubPtr;
@@ -147,7 +147,7 @@ void *Detour_DetourFunction32(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     size_t InstructionSize = Detour_GetInstructionSize(This, FunctionPtr, sizeof(This->JumpInstructions32));
 
 #ifdef DEBUG
-    klog("[Detour] %s - InstructionSize: %zu\n", __FUNCTION__, InstructionSize);
+    klog("[Detour] %s: - InstructionSize: %zu\n", __FUNCTION__, InstructionSize);
 #endif
 
     if (InstructionSize < sizeof(This->JumpInstructions32)) {
@@ -204,7 +204,7 @@ void *Detour_DetourFunction32(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     Detour_WriteJump32(This, (void *) FunctionPtr, (uint64_t) This->TrampolinePtr);
 
 #ifdef DEBUG
-    klog("[Detour] %s: Detour Written Successfully! (FunctionPtr: %p - HookPtr: %p - HookPtrTrampoline: %p - StubPtr: %p - StubSize: %zu\n", __FUNCTION__, This->FunctionPtr, This->HookPtr, This->TrampolinePtr, This->StubPtr, This->StubSize);
+    klog("[Detour] %s: Detour Written Successfully! (FunctionPtr: %p - HookPtr: %p - HookPtrTrampoline: %p - StubPtr: %p - StubSize: %zu)\n", __FUNCTION__, This->FunctionPtr, This->HookPtr, This->TrampolinePtr, This->StubPtr, This->StubSize);
 #endif
 
     return This->StubPtr;

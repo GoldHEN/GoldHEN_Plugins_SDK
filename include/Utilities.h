@@ -61,7 +61,7 @@ typedef unsigned long HA;
 // unhooks, killing the defined hook, CANNOT BE REUSED
 #define UNHOOK(name) Detour_Destroy( (&(Detour_##name)) )
 
-void klog(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
+#define klog(a, args...) printf("(%s:%d) " a, __FILE__, __LINE__, ##args)
 
 void hex_dump(void *data, size_t size);
 
