@@ -44,31 +44,22 @@ typedef unsigned long HA;
         Detour Detour_##name = { DetourMode_x64 }
 
 // this does a 64bit hook
-#define HOOK(name)                                                             \
-    if ((uint64_t)name > 0) {                                                  \
-        Detour_Construct(&(Detour_##name), DetourMode_x64);                    \
-        if (Detour_DetourFunction(                                             \
-            &(Detour_##name), (uint64_t)name, (void *)name##_hook) != NULL) {} \
-    }
+#define HOOK(name) do { \
+    Detour_Construct( (&(Detour_##name)), DetourMode_x64);                                 \
+    Detour_DetourFunction( (&(Detour_##name)), (uint64_t)name, (void *)(&(name##_hook)) ); \
+} while (0)
 
 // 32bit...
-#define HOOK32(name)                                                           \
-    if ((uint64_t)name > 0) {                                                  \
-        Detour_Construct(&(Detour_##name), DetourMode_x32);                    \
-        if (Detour_DetourFunction(                                             \
-            &(Detour_##name), (uint64_t)name, (void *)name##_hook) != NULL) {} \
-    }
+#define HOOK32(name) do { \
+    Detour_Construct( (&(Detour_##name)), DetourMode_x32);                                 \
+    Detour_DetourFunction( (&(Detour_##name)), (uint64_t)name, (void *)(&(name##_hook)) ); \
+} while (0)
 
 // tries to pass arguments
-#define HOOK_CONTINUE(name, type, ...)                                         \
-     ((uint64_t)name > 0) && ((Detour_##name).FunctionPtr) ?                   \
-         Detour_Stub(&(Detour_##name), type, __VA_ARGS__) : 0
+#define HOOK_CONTINUE(name, type, ...) Detour_Stub( (&(Detour_##name)) , type , __VA_ARGS__ )
 
 // unhooks, killing the defined hook, CANNOT BE REUSED
-#define UNHOOK(name)                                                           \
-    if ( ((uint64_t)name > 0) && ((Detour_##name).FunctionPtr) ) {             \
-        Detour_Destroy(&(Detour_##name));                                      \
-    }
+#define UNHOOK(name) Detour_Destroy( (&(Detour_##name)) )
 
 void klog(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 
