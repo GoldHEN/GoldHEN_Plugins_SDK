@@ -1,4 +1,4 @@
-@echo off
+rem @echo off
 rem GoldHEN SDK static lib build script
 
 
@@ -20,4 +20,3 @@ for %%f in (source\*.c) do (
 )
 
 %AR% --format=bsd rcs libGoldHEN_Hook.a build\*.o 
-
