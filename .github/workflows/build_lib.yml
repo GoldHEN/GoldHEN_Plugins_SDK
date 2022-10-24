@@ -40,6 +40,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Download OpenOrbis Toolchain
+      shell: bash
       run: |
         curl -fLOs https://github.com/illusion0001/OpenOrbis-PS4-Toolchain/releases/download/0.0.1.416/toolchain.tar.gz
         tar xf toolchain.tar.gz
