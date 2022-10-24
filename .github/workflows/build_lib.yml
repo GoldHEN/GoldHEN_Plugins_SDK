@@ -8,6 +8,7 @@ on:
       - '**/*.h'
       - '**/*.yml'
       - '**/Makefile'
+      - '**/.bat'
   pull_request:
   workflow_dispatch:
 
