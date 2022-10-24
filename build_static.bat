@@ -1,7 +1,6 @@
 @echo off
 rem GoldHEN SDK static lib build script
 
-
 rem change these if you need:
 rem C compiler
 set CC=clang
@@ -19,5 +18,5 @@ for %%f in (source\*.c) do (
 	%CC% %CFLAGS% -c %%f -o build\%%~nf.o
 )
 
-%AR% --format=bsd rcs libGoldHEN_Hook.a build\*.o 
-
+%CC% -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -isysroot "%OO_PS4_TOOLCHAIN%" -isystem "%OO_PS4_TOOLCHAIN%\include" -Iinclude -c crt/crtprx.c -o build\crtprx.o
+%AR% --format=bsd rcs libGoldHEN_Hook.a build\*.o build\crtprx.o

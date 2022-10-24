@@ -8,11 +8,12 @@ on:
       - '**/*.h'
       - '**/*.yml'
       - '**/Makefile'
+      - '**/.bat'
   pull_request:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
     steps:
 
@@ -30,3 +31,20 @@ jobs:
       run: |
         clang -v
         make
+
+  build-win32:
+    runs-on: windows-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Download OpenOrbis Toolchain
+      shell: bash
+      run: |
+        curl -fLOs https://github.com/illusion0001/OpenOrbis-PS4-Toolchain/releases/download/0.0.1.416/toolchain.tar.gz
+        tar xf toolchain.tar.gz
+        echo "OO_PS4_TOOLCHAIN=$GITHUB_WORKSPACE/OpenOrbis/PS4Toolchain" >> $GITHUB_ENV
+
+    - name: Build SDK Lib
+      run: .\build_static.bat
