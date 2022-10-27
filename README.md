@@ -1,5 +1,7 @@
 # GoldHEN Plugin SDK - a PRX hook/patch SDK for Orbis OS
 
+[![Build library check](https://github.com/GoldHEN/GoldHEN_Plugins_SDK/actions/workflows/build_lib.yml/badge.svg)](https://github.com/GoldHEN/GoldHEN_Plugins_SDK/actions/workflows/build_lib.yml)
+
 This is the GoldHEN Plugin SDK repository.
 
 It requires [OpenOrbis PS4 Toolchain](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) and [LLVM 10+](https://llvm.org/) to be installed.
