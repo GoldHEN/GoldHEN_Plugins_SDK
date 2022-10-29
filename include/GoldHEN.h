@@ -42,18 +42,19 @@ struct proc_info {
     uint64_t base_address;
 } __attribute__((packed));
 
-struct proc_hook {
-    uint64_t function;
-    uint64_t hook;
-    uint64_t trampoline;
-    uint64_t stub;
-    uint64_t stub_size;
+struct proc_rw {
+    uint64_t address;
+    void *data;
+    uint64_t length;
+    uint64_t write;
 } __attribute__((packed));
 
+#define GOLDHEN_SDK_CMD_VERSION            0
 #define GOLDHEN_SDK_CMD_KLOG               1
 #define GOLDHEN_SDK_CMD_JAILBREAK          2
 #define GOLDHEN_SDK_CMD_UNJAILBREAK        3
 #define GOLDHEN_SDK_CMD_PROCESS_INFO       4
+#define GOLDHEN_SDK_CMD_PROCESS_RW         5
 
 extern int sys_sdk_cmd(uint64_t cmd, void *data);
 
@@ -62,6 +63,8 @@ extern int sys_sdk_jailbreak(struct jailbreak_backup* jb);
 extern int sys_sdk_unjailbreak(struct jailbreak_backup* jb);
 
 int sys_sdk_proc_info(struct proc_info* info);
+
+int sys_sdk_proc_rw(struct proc_rw* data);
 
 #ifdef __cplusplus
 }

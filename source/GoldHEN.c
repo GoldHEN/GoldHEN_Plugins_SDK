@@ -12,6 +12,9 @@
 #include "Common.h"
 
 /** GoldHEN **/
+uint32_t sys_sdk_version() {
+    return sys_sdk_cmd(GOLDHEN_SDK_CMD_VERSION, NULL);
+}
 
 int sys_sdk_cmd(uint64_t cmd, void *data) {
     return orbis_syscall(500, cmd, data);
@@ -31,4 +34,8 @@ int sys_sdk_unjailbreak(struct jailbreak_backup* jb) {
 
 int sys_sdk_proc_info(struct proc_info* info) {
     return sys_sdk_cmd(GOLDHEN_SDK_CMD_PROCESS_INFO, info);
+}
+
+int sys_sdk_proc_rw(struct proc_rw* data) {
+    return sys_sdk_cmd(GOLDHEN_SDK_CMD_PROCESS_RW, data);
 }
