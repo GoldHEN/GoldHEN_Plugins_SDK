@@ -46,7 +46,7 @@ struct proc_rw {
     uint64_t address;
     void *data;
     uint64_t length;
-    uint64_t write;
+    uint64_t write_flags;
 } __attribute__((packed));
 
 #define GOLDHEN_SDK_CMD_VERSION            0
