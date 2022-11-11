@@ -78,4 +78,4 @@ clean:
 	rm -rf $(TARGET) $(TARGETSTUB) $(INTDIR) $(OBJS) build/crtprx.o
 
 crt:
-	clang -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c crt/crtprx.c -o build/crtprx.o
+	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c crt/crtprx.c -o build/crtprx.o
