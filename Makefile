@@ -2,6 +2,7 @@
 TARGET       := libGoldHEN_Hook.prx
 TARGETSTUB   := libGoldHEN_Hook_Stub.so
 TARGETSTATIC := libGoldHEN_Hook.a
+TARGETCRT    := build/crtprx.o
 
 # Libraries linked into the ELF.
 LIBS         := -lkernel -lSceLibcInternal -lSceSysmodule
@@ -48,11 +49,11 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 $(TARGET): $(INTDIR) $(OBJS)
-	$(LD) $(INTDIR)/*.o build/crtprx.o -o $(INTDIR)/$(PROJDIR).elf $(LDFLAGS)
+	$(LD) $(INTDIR)/*.o $(TARGETCRT) -o $(INTDIR)/$(PROJDIR).elf $(LDFLAGS)
 	$(TOOLCHAIN)/bin/$(CDIR)/create-fself -in=$(INTDIR)/$(PROJDIR).elf -out=$(INTDIR)/$(PROJDIR).oelf --lib=$(TARGET) --paid 0x3800000000000011
 
 $(TARGETSTATIC): $(INTDIR) $(OBJS)
-	$(AR) --format=bsd rcs $(TARGETSTATIC) $(INTDIR)/*.o build/crtprx.o
+	$(AR) --format=bsd rcs $(TARGETSTATIC) $(TARGETCRT) $(INTDIR)/*.o
 
 $(TARGETSTUB): $(INTDIR) $(STUBOBJS)
 	$(CC) $(INTDIR)/*.o.stub -o $(TARGETSTUB) -target x86_64-pc-linux-gnu -shared -fuse-ld=lld -ffreestanding -nostdlib -fno-builtin -L$(TOOLCHAIN)/lib $(LIBS)
@@ -75,7 +76,7 @@ $(INTDIR)/%.o.stub: $(PROJDIR)/%.cpp
 all: crt $(TARGETSTATIC)
 
 clean:
-	rm -rf $(TARGET) $(TARGETSTUB) $(INTDIR) $(OBJS) build/crtprx.o
+	rm -rf $(TARGET) $(TARGETSTUB) $(INTDIR) $(OBJS) $(TARGETCRT)
 
 crt:
-	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c crt/crtprx.c -o build/crtprx.o
+	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c crt/crtprx.c -o $(TARGETCRT)
