@@ -76,7 +76,7 @@ $(INTDIR)/%.o.stub: $(PROJDIR)/%.cpp
 all: crt $(TARGETSTATIC)
 
 clean:
-	rm -rf $(TARGET) $(TARGETSTUB) $(INTDIR) $(OBJS) $(TARGETCRT)
+	rm -rf $(TARGET) $(TARGETSTUB) $(INTDIR) $(OBJS) $(TARGETCRT) $(TARGETSTATIC)
 
 crt:
 	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c crt/crtprx.c -o $(TARGETCRT)
