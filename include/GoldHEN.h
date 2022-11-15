@@ -55,12 +55,15 @@ struct proc_rw {
 #define GOLDHEN_SDK_CMD_UNJAILBREAK        3
 #define GOLDHEN_SDK_CMD_PROCESS_INFO       4
 #define GOLDHEN_SDK_CMD_PROCESS_RW         5
+#define GOLDHEN_SDK_VERSION       0x00000100 // 1.00
 
 extern int sys_sdk_cmd(uint64_t cmd, void *data);
 
 extern int sys_sdk_jailbreak(struct jailbreak_backup* jb);
 
 extern int sys_sdk_unjailbreak(struct jailbreak_backup* jb);
+
+uint32_t sys_sdk_version();
 
 int sys_sdk_proc_info(struct proc_info* info);
 
