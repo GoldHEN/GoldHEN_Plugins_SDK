@@ -39,3 +39,12 @@ int sys_sdk_proc_info(struct proc_info* info) {
 int sys_sdk_proc_rw(struct proc_rw* data) {
     return sys_sdk_cmd(GOLDHEN_SDK_CMD_PROCESS_RW, data);
 }
+
+int sys_sdk_proc_prx_load(char* process_name, char* prx_path) {
+    struct proc_prx_load args;
+    memset(&args, 0, sizeof(struct proc_prx_load));
+    strncpy(args.process_name, process_name, sizeof(args.process_name));
+    strncpy(args.prx_path, prx_path, sizeof(args.prx_path));
+
+    return sys_sdk_cmd(GOLDHEN_SDK_CMD_PROCESS_PRX_LOAD, &args);
+}
