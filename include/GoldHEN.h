@@ -52,6 +52,13 @@ struct proc_rw {
 struct proc_prx_load {
     char process_name[32];
     char prx_path[100];
+    uint64_t res;
+} __attribute__((packed));
+
+struct proc_prx_unload {
+    char process_name[32];
+    uint64_t prx_handle;
+    uint64_t res;
 } __attribute__((packed));
 
 #define GOLDHEN_SDK_CMD_VERSION            0
@@ -61,6 +68,7 @@ struct proc_prx_load {
 #define GOLDHEN_SDK_CMD_PROCESS_INFO       4
 #define GOLDHEN_SDK_CMD_PROCESS_RW         5
 #define GOLDHEN_SDK_CMD_PROCESS_PRX_LOAD   6
+#define GOLDHEN_SDK_CMD_PROCESS_PRX_UNLOAD 7
 
 #define GOLDHEN_SDK_VERSION       0x00000100 // 1.00
 
@@ -77,6 +85,8 @@ int sys_sdk_proc_info(struct proc_info* info);
 int sys_sdk_proc_rw(struct proc_rw* data);
 
 int sys_sdk_proc_prx_load(char* process_name, char* prx_path);
+
+int sys_sdk_proc_prx_unload(char* process_name, int prx_handle);
 
 #ifdef __cplusplus
 }

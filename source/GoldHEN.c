@@ -46,5 +46,18 @@ int sys_sdk_proc_prx_load(char* process_name, char* prx_path) {
     strncpy(args.process_name, process_name, sizeof(args.process_name));
     strncpy(args.prx_path, prx_path, sizeof(args.prx_path));
 
-    return sys_sdk_cmd(GOLDHEN_SDK_CMD_PROCESS_PRX_LOAD, &args);
+    sys_sdk_cmd(GOLDHEN_SDK_CMD_PROCESS_PRX_LOAD, &args);
+
+    return args.res;
+}
+
+int sys_sdk_proc_prx_unload(char* process_name, int prx_handle) {
+    struct proc_prx_unload args;
+    memset(&args, 0, sizeof(struct proc_prx_unload));
+    strncpy(args.process_name, process_name, sizeof(args.process_name));
+    args.prx_handle = prx_handle;
+
+    sys_sdk_cmd(GOLDHEN_SDK_CMD_PROCESS_PRX_UNLOAD, &args);
+
+    return args.res;
 }
