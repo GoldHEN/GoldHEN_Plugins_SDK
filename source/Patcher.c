@@ -32,7 +32,7 @@ void Patcher_Install_Patch(Patcher *This, uint64_t Address, const void* Data, si
     int res = sceKernelMmap(0, Length, VM_PROT_ALL, 0x1000 | 0x2, -1, 0, &This->OriginalData);
     if (res < 0)
     {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Patcher] sceKernelMmap Failed: 0x%X\n", res);
 #endif
         return;
@@ -42,7 +42,7 @@ void Patcher_Install_Patch(Patcher *This, uint64_t Address, const void* Data, si
     //Write Patch.
     memcpy((void*)Address, Data, Length);
 
-#ifdef DEBUG
+#if (DEBUG) == 1
     klog("[Patcher] Install_Patch: Patch (%p) Written Successfully!\n", (void*)Address);
 #endif
 }
@@ -57,12 +57,12 @@ void Patcher_Restore_Patch(Patcher *This)
         //Write original Data back.
         memcpy((void*)This->Address, This->OriginalData, This->Length);
 
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Patcher] Restore_Patch: Patch (%p) Restored Successfully!\n", (void*)This->Address);
 #endif
     }
     else {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Patcher] Patch not installed.\n");
 #endif
     }

@@ -30,4 +30,4 @@ jobs:
     - name: Build SDK Lib
       run: |
         clang -v
-        make
+        make DEBUGFLAGS=1

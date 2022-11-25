@@ -74,7 +74,7 @@ void *Detour_DetourFunction(Detour *This, uint64_t FunctionPtr, void *HookPtr) {
 
 void *Detour_DetourFunction64(Detour *This, uint64_t FunctionPtr, void *HookPtr) {
     if (!FunctionPtr  || !HookPtr) {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Detour] %s: FunctionPtr or HookPtr NULL (%p -> %p)\n", __FUNCTION__, (void*)FunctionPtr, HookPtr);
 #endif
         return NULL;
@@ -82,12 +82,12 @@ void *Detour_DetourFunction64(Detour *This, uint64_t FunctionPtr, void *HookPtr)
 
     uint32_t InstructionSize = Detour_GetInstructionSize(This, FunctionPtr, sizeof(This->JumpInstructions64));
 
-#ifdef DEBUG
+#if (DEBUG) == 1
     klog("[Detour] %s: - InstructionSize: %u\n", __FUNCTION__, InstructionSize);
 #endif
 
     if (InstructionSize < sizeof(This->JumpInstructions64)) {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Detour] %s: Hooking Requires a minimum of %d bytes to write jump!\n", __FUNCTION__, (int)sizeof(This->JumpInstructions64));
 #endif
         return NULL;
@@ -96,7 +96,7 @@ void *Detour_DetourFunction64(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     int res = sceKernelMmap(0, sizeof(This->JumpInstructions64), VM_PROT_ALL, 0x1000 | 0x2, -1, 0, &This->TrampolinePtr);
 
     if (res < 0 || This->TrampolinePtr == 0) {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Detour] %s: sceKernelMmap failed (0x%X).\n", __FUNCTION__, res);
 #endif
         return 0;
@@ -116,7 +116,7 @@ void *Detour_DetourFunction64(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     res = sceKernelMmap(0, This->StubSize, VM_PROT_ALL, 0x1000 | 0x2, -1, 0, &This->StubPtr);
 
     if (res < 0 || This->StubPtr == 0) {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Detour] %s: sceKernelMmap failed (0x%X).\n", __FUNCTION__, res);
 #endif
         return 0;
@@ -129,7 +129,7 @@ void *Detour_DetourFunction64(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     memset((void *) FunctionPtr, 0x90, InstructionSize);
     Detour_WriteJump64(This, (void *) FunctionPtr, (uint64_t) This->TrampolinePtr);
 
-#ifdef DEBUG
+#if (DEBUG) == 1
     klog("[Detour] %s: Detour Written Successfully! (FunctionPtr: %p - HookPtr: %p - HookPtrTrampoline: %p - StubPtr: %p - StubSize: %zu)\n", __FUNCTION__, This->FunctionPtr, This->HookPtr, This->TrampolinePtr, This->StubPtr, This->StubSize);
 #endif
 
@@ -138,7 +138,7 @@ void *Detour_DetourFunction64(Detour *This, uint64_t FunctionPtr, void *HookPtr)
 
 void *Detour_DetourFunction32(Detour *This, uint64_t FunctionPtr, void *HookPtr) {
     if (!FunctionPtr || !HookPtr) {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Detour] %s: FunctionPtr or HookPtr NULL (%p -> %p)\n", __FUNCTION__, (void*)FunctionPtr, HookPtr);
 #endif
         return NULL;
@@ -146,12 +146,12 @@ void *Detour_DetourFunction32(Detour *This, uint64_t FunctionPtr, void *HookPtr)
 
     size_t InstructionSize = Detour_GetInstructionSize(This, FunctionPtr, sizeof(This->JumpInstructions32));
 
-#ifdef DEBUG
+#if (DEBUG) == 1
     klog("[Detour] %s: - InstructionSize: %zu\n", __FUNCTION__, InstructionSize);
 #endif
 
     if (InstructionSize < sizeof(This->JumpInstructions32)) {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Detour] %s: Hooking Requires a minimum of %d bytes to write jump!\n", __FUNCTION__, (int)sizeof(This->JumpInstructions64));
 #endif
         return NULL;
@@ -159,7 +159,7 @@ void *Detour_DetourFunction32(Detour *This, uint64_t FunctionPtr, void *HookPtr)
 
     if ((memcmp((void*) FunctionPtr, This->JumpInstructions32, 1) == 0) && InstructionSize == sizeof(This->JumpInstructions32)) {
         uint32_t TrampolineOffest = *(uint32_t*)(FunctionPtr + 1);
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Detour] %s: Trampoline found at %p (Offset: %X). Detour called for Trampoline...\n", __FUNCTION__, (void*)(TrampolineOffest + FunctionPtr + 5), TrampolineOffest);
 #endif
         This->Mode = DetourMode_x64;
@@ -169,7 +169,7 @@ void *Detour_DetourFunction32(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     This->TrampolinePtr = malloc(sizeof(This->JumpInstructions64));
 
     if (This->TrampolinePtr == 0) {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Detour] %s: malloc failed.\n", __FUNCTION__);
 #endif
         return 0;
@@ -190,7 +190,7 @@ void *Detour_DetourFunction32(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     int res = sceKernelMmap(0, This->StubSize, VM_PROT_ALL, 0x1000 | 0x2, -1, 0, &This->StubPtr);
 
     if (res < 0 || This->StubPtr == 0) {
-#ifdef DEBUG
+#if (DEBUG) == 1
         klog("[Detour] %s: sceKernelMmap failed (0x%X).\n", __FUNCTION__, res);
 #endif
         return 0;
@@ -203,7 +203,7 @@ void *Detour_DetourFunction32(Detour *This, uint64_t FunctionPtr, void *HookPtr)
     memset((void *) FunctionPtr, 0x90, InstructionSize);
     Detour_WriteJump32(This, (void *) FunctionPtr, (uint64_t) This->TrampolinePtr);
 
-#ifdef DEBUG
+#if (DEBUG) == 1
     klog("[Detour] %s: Detour Written Successfully! (FunctionPtr: %p - HookPtr: %p - HookPtrTrampoline: %p - StubPtr: %p - StubSize: %zu)\n", __FUNCTION__, This->FunctionPtr, This->HookPtr, This->TrampolinePtr, This->StubPtr, This->StubSize);
 #endif
 
@@ -234,7 +234,7 @@ void Detour_RestoreFunction(Detour *This) {
             sceKernelMprotect((void *) RestorePtr, RestoreSize, VM_PROT_ALL);
             memcpy((void *) RestorePtr, This->StubPtr, RestoreSize);
 
-#ifdef DEBUG
+#if (DEBUG) == 1
             klog("[Detour] %s: (%p) has been Restored Successfully!\n", __FUNCTION__, RestorePtr);
 #endif
         }
