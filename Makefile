@@ -7,8 +7,19 @@ TARGETCRT    := build/crtprx.o
 # Libraries linked into the ELF.
 LIBS         := -lkernel -lSceLibcInternal -lSceSysmodule
 
+LOG_TYPE = -D__USE_KLOG__
+DEBUG_FLAGS = -DDEBUG=0
+
+ifeq ($(PRINTF),1)
+    LOG_TYPE = -D__USE_PRINTF__
+endif
+
+ifeq ($(DEBUGFLAGS),1)
+    DEBUG_FLAGS = -DDEBUG=1
+endif
+
 # Additional compile flags.
-#EXTRAFLAGS  :=
+EXTRAFLAGS  := $(DEBUG_FLAGS) $(LOG_TYPE)
 
 # Root vars
 TOOLCHAIN   := $(OO_PS4_TOOLCHAIN)
@@ -25,7 +36,7 @@ OBJS        := $(patsubst $(PROJDIR)/%.c, $(INTDIR)/%.o, $(CFILES)) $(patsubst $
 STUBOBJS    := $(patsubst $(PROJDIR)/%.c, $(INTDIR)/%.o, $(CFILES)) $(patsubst $(PROJDIR)/%.cpp, $(INTDIR)/%.o.stub, $(CPPFILES)) $(patsubst $(COMMONDIR)/%.cpp, $(INTDIR)/%.o.stub, $(COMMONFILES))
 
 # Define final C/C++ flags
-CFLAGS      := --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -c $(EXTRAFLAGS) -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include -Iinclude -DDEBUG=$(DEBUGFLAGS)
+CFLAGS      := --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -c $(EXTRAFLAGS) -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include -Iinclude
 CXXFLAGS    := $(CFLAGS) -isystem $(TOOLCHAIN)/$(INCLUDEDIR)/c++/v1
 LDFLAGS     := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x -e _init --eh-frame-hdr -L$(TOOLCHAIN)/lib $(LIBS)
 
@@ -74,10 +85,11 @@ $(INTDIR)/%.o.stub: $(PROJDIR)/%.cpp
 .PHONY: clean crt
 .DEFAULT_GOAL := all
 
-all: crt $(TARGETSTATIC)
+all: clean crt $(TARGETSTATIC)
 
 clean:
 	rm -rf $(TARGET) $(TARGETSTUB) $(INTDIR) $(OBJS) $(TARGETCRT) $(TARGETSTATIC)
 
 crt:
+	@mkdir build
 	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c crt/crtprx.c -o $(TARGETCRT)

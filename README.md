@@ -18,6 +18,10 @@ Just build all files from `source/` as C source code, and include stuff from `in
 If you are sure you won't be rebuilding the GoldHEN SDK, then you can include stuff from `include/`,
 run `make` for Linux or `build_static.bat` for Windows to build a static library `libGoldHEN_Hook.a` and then use it in your project for the implementation of the headers.
 
+# Troubleshooting log crashes
+
+If you ran into crashes related to print logging (usually during VA args assignment clearing stack) you can try building with printf `make PRINTF=1` and `./build.sh -printf` in main plugin repository.
+
 ## Credits
 
 - [Everyone at Mira/OpenOrbis Team](https://github.com/OpenOrbis)
