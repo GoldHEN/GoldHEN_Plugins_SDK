@@ -57,6 +57,7 @@ ifeq ($(UNAME_S),Darwin)
 		CC      := /usr/local/opt/llvm/bin/clang
 		CCX     := /usr/local/opt/llvm/bin/clang++
 		LD      := /usr/local/opt/llvm/bin/ld.lld
+		AR      := /usr/local/opt/llvm/bin/llvm-ar
 		CDIR    := macos
 endif
 
@@ -92,4 +93,11 @@ clean:
 
 crt:
 	@mkdir build
-	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c crt/crtprx.c -o $(TARGETCRT)
+	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include -c crt/crtprx.c -o $(TARGETCRT)
+
+install: all
+	@echo Copying...
+	@mkdir -p $(OO_PS4_TOOLCHAIN)/include/GoldHEN
+	@cp -frv include/* $(OO_PS4_TOOLCHAIN)/include/GoldHEN
+	@cp -frv $(TARGETSTATIC) $(OO_PS4_TOOLCHAIN)/lib
+	@echo Done!
