@@ -1,6 +1,7 @@
 # GoldHEN Plugin SDK - a PRX hook/patch SDK for Orbis OS
 
 [![Build library check](https://github.com/GoldHEN/GoldHEN_Plugins_SDK/actions/workflows/build_lib.yml/badge.svg)](https://github.com/GoldHEN/GoldHEN_Plugins_SDK/actions/workflows/build_lib.yml)
+[![MIT Licensed](https://img.shields.io/github/license/GoldHEN/GoldHEN_Plugins_SDK.svg?maxAge=2592000)](https://github.com/GoldHEN/GoldHEN_Plugins_SDK/blob/main/LICENSE)
 
 This is the GoldHEN Plugin SDK repository.
 
@@ -31,3 +32,7 @@ If you ran into crashes related to print logging (usually during VA args assignm
 - [jocover](https://github.com/jocover)
 - [bucanero](https://github.com/bucanero)
 - [nik](https://github.com/nkrapivin)
+
+## License
+
+GoldHEN Plugin SDK is released under the [MIT License](https://github.com/GoldHEN/GoldHEN_Plugins_SDK/blob/main/LICENSE).
