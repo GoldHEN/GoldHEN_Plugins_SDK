@@ -95,7 +95,7 @@ crt:
 	@mkdir build
 	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include -c crt/crtprx.c -o $(TARGETCRT)
 
-install:
+install: all
 	@echo Copying...
 	@mkdir -p $(OO_PS4_TOOLCHAIN)/include/GoldHEN
 	@cp -frv include/* $(OO_PS4_TOOLCHAIN)/include/GoldHEN
