@@ -5,7 +5,7 @@ TARGETSTATIC := libGoldHEN_Hook.a
 TARGETCRT    := build/crtprx.o
 
 # Libraries linked into the ELF.
-LIBS         := -lkernel -lSceLibcInternal -lSceSysmodule
+LIBS         := -lSceLibcInternal -lkernel -lSceSysmodule
 
 LOG_TYPE = -D__USE_KLOG__
 DEBUG_FLAGS = -DDEBUG=0
