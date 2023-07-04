@@ -21,6 +21,12 @@ void Patcher_Construct(Patcher *This)
 
 void Patcher_Install_Patch(Patcher *This, uint64_t Address, const void* Data, size_t Length)
 {
+    if (!Address || !Length)
+    {
+        klog("[Patcher] Install_Patch: No target (0x%lx) or length (%li) provided!\n", Address, Length);
+        return;
+    }
+
     //Backup Params.
     This->Address = Address;
     This->Length = Length;
