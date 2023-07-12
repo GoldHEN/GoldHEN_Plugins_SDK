@@ -33,6 +33,8 @@ extern "C" {
 #define STRINGIFY(x) #x
 #define STRINGIFY_DEEP(x) STRINGIFY(x)
 
+// these are defined as enums in newest oosdk
+/*
 #define ORBIS_SYSMODULE_INTERNAL_SYS_CORE            0x80000004
 #define ORBIS_SYSMODULE_INTERNAL_NETCTL              0x80000009
 #define ORBIS_SYSMODULE_INTERNAL_HTTP                0x8000000A
@@ -46,6 +48,7 @@ extern "C" {
 #define ORBIS_SYSMODULE_INTERNAL_VIDEO_OUT           0x80000022
 #define ORBIS_SYSMODULE_INTERNAL_BGFT                0x8000002A
 #define ORBIS_SYSMODULE_INTERNAL_PRECOMPILED_SHADERS 0x80000064
+*/
 
 #ifdef __cplusplus
 }
